@@ -3,6 +3,9 @@ package com.example.quickcart.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Product {
 
@@ -19,25 +22,36 @@ public class Product {
     @PositiveOrZero(message = "Value must be zero or greater than zero")
     private Double price;
 
+    @Column(nullable = false)
     @NotBlank(message = "Description field is required")
     private String description;
 
     private Double ratings = 0.0;
 
+    @Column(nullable = false)
     @NotBlank(message = "Seller field is required")
     private String seller;
 
+    @Column(nullable = false)
     @NotNull(message = "Stock field is required")
     private Integer stock;
 
     private Integer numOfReviews = 0;
 
-    // ✅ REQUIRED by JPA
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "product_id")
+    private List<ProductImage> images = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "product_id")
+    private List<ProductReview> reviews = new ArrayList<>();
+
     public Product() {}
 
-    // Constructor
     public Product(Long id, String name, Double price, String description,
-                   Double ratings, String seller, Integer stock, Integer numOfReviews) {
+                   Double ratings, String seller, Integer stock,
+                   Integer numOfReviews, List<ProductImage> images,
+                   List<ProductReview> reviews) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -46,9 +60,12 @@ public class Product {
         this.seller = seller;
         this.stock = stock;
         this.numOfReviews = numOfReviews;
+        this.images = images;
+        this.reviews = reviews;
     }
 
     // Getters & Setters
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -72,5 +89,10 @@ public class Product {
 
     public Integer getNumOfReviews() { return numOfReviews; }
     public void setNumOfReviews(Integer numOfReviews) { this.numOfReviews = numOfReviews; }
-}
 
+    public List<ProductImage> getImages() { return images; }
+    public void setImages(List<ProductImage> images) { this.images = images; }
+
+    public List<ProductReview> getReviews() { return reviews; }
+    public void setReviews(List<ProductReview> reviews) { this.reviews = reviews; }
+}
