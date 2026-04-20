@@ -46,12 +46,11 @@ public class Product {
     @JoinColumn(name = "product_id")
     private List<ProductReview> reviews = new ArrayList<>();
 
+
     public Product() {}
 
     public Product(Long id, String name, Double price, String description,
-                   Double ratings, String seller, Integer stock,
-                   Integer numOfReviews, List<ProductImage> images,
-                   List<ProductReview> reviews) {
+                   Double ratings, String seller,Integer stock) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -59,9 +58,8 @@ public class Product {
         this.ratings = ratings;
         this.seller = seller;
         this.stock = stock;
-        this.numOfReviews = numOfReviews;
-        this.images = images;
-        this.reviews = reviews;
+
+
     }
 
     // Getters & Setters
@@ -89,10 +87,4 @@ public class Product {
 
     public Integer getNumOfReviews() { return numOfReviews; }
     public void setNumOfReviews(Integer numOfReviews) { this.numOfReviews = numOfReviews; }
-
-    public List<ProductImage> getImages() { return images; }
-    public void setImages(List<ProductImage> images) { this.images = images; }
-
-    public List<ProductReview> getReviews() { return reviews; }
-    public void setReviews(List<ProductReview> reviews) { this.reviews = reviews; }
 }
