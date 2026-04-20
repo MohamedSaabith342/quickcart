@@ -26,4 +26,11 @@ public class ProductController {
         Map<String, Object> response = productService.getAllProducts(page, size);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable Long id){
+        Product response = productService.getProductById(id);
+        return ResponseEntity.ok(response);
+    }
+
 }
