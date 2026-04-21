@@ -1,7 +1,10 @@
 package com.example.quickcart.service;
 
+import com.example.quickcart.dto.ProductReviewDto;
 import com.example.quickcart.entity.Product;
+import com.example.quickcart.entity.ProductReview;
 import com.example.quickcart.repository.ProductRepository;
+import com.example.quickcart.repository.ProductReviewRepository;
 import com.example.quickcart.spec.ProductSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +22,9 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ProductReviewRepository productReviewRepository;
 
     public Map<String, Object> getAllProducts(int page, int size) {
 
@@ -45,5 +51,16 @@ public class ProductService {
                 .and(ProductSpecification.ratingsGreaterThan(ratings));
 
         return productRepository.findAll(spec);
+    }
+
+    public void addReview(ProductReviewDto reviewDto) {
+        Product product = productRepository.findById(reviewDto.getProductId()).orElseThrow(() -> new RuntimeException("product not found"));
+        ProductReview review = new ProductReview();
+        review.setComment(reviewDto.getComment());
+        review.setRating(reviewDto.getRating());
+        review.setProduct(product);
+
+        productReviewRepository.save(review);
+
     }
 }
