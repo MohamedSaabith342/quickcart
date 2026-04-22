@@ -21,7 +21,7 @@ public class ProductDto {
     private String seller;
     private Integer stock;
     private Integer numOfReviews = 0;
-    private List<ProductImage> images = new ArrayList<>();
+    private List<ProductImageDto> images = new ArrayList<>();
     private List<ProductReviewDto> reviews = new ArrayList<>();
 
 
@@ -69,11 +69,11 @@ public class ProductDto {
     public Integer getNumOfReviews() { return numOfReviews; }
     public void setNumOfReviews(Integer numOfReviews) { this.numOfReviews = numOfReviews; }
 
-    public List<ProductImage> getImages() {
+    public List<ProductImageDto> getImages() {
         return images;
     }
 
-    public void setImages(List<ProductImage> images) {
+    public void setImages(List<ProductImageDto> images) {
         this.images = images;
     }
 

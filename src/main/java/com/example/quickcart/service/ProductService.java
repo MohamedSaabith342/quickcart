@@ -1,6 +1,7 @@
 package com.example.quickcart.service;
 
 import com.example.quickcart.dto.ProductDto;
+import com.example.quickcart.dto.ProductImageDto;
 import com.example.quickcart.dto.ProductReviewDto;
 import com.example.quickcart.entity.Product;
 import com.example.quickcart.entity.ProductImage;
@@ -65,6 +66,18 @@ public class ProductService {
         }
         ).collect(Collectors.toList());
         productDto.setReviews(productReviewDtos);
+
+        List<ProductImageDto> imageDtos = product.getImages().stream().map(image -> {
+                    ProductImageDto imageDto = new ProductImageDto();
+                    imageDto.setUrl(image.getUrl());
+
+                    return imageDto;
+                }
+        ).collect(Collectors.toList());
+
+        productDto.setImages(imageDtos);
+
+
 
         return productDto;
     }
