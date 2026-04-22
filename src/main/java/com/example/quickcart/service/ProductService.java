@@ -69,7 +69,7 @@ public class ProductService {
 
         List<ProductImageDto> imageDtos = product.getImages().stream().map(image -> {
                     ProductImageDto imageDto = new ProductImageDto();
-                    imageDto.setUrl(image.getUrl());
+                    imageDto.setUrl(image.getPublicId());
 
                     return imageDto;
                 }
