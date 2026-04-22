@@ -1,7 +1,9 @@
 package com.example.quickcart.service;
 
+import com.example.quickcart.dto.ProductDto;
 import com.example.quickcart.dto.ProductReviewDto;
 import com.example.quickcart.entity.Product;
+import com.example.quickcart.entity.ProductImage;
 import com.example.quickcart.entity.ProductReview;
 import com.example.quickcart.repository.ProductRepository;
 import com.example.quickcart.repository.ProductReviewRepository;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -31,13 +34,39 @@ public class ProductService {
         Pageable pageable = PageRequest.of(page, size);
         Page<Product> products = productRepository.findAll(pageable);
 
+        List<ProductDto> productDtos = products.stream().map(product -> this.convertToDto(product)).collect(Collectors.toList());
+
         Map<String, Object> response = new HashMap<>();
-        response.put("products", products.getContent());
+        response.put("products", productDtos);
         response.put("totalProducts", products.getTotalElements());
         response.put("totalPages", products.getTotalPages());
         response.put("currentPage", products.getNumber());
 
         return response;
+    }
+
+    public ProductDto convertToDto(Product product){
+        ProductDto productDto = new ProductDto();
+        productDto.setId(product.getId());
+        productDto.setDescription(product.getDescription());
+        productDto.setCategory(product.getCategory());
+        productDto.setName(product.getName());
+        productDto.setRatings(product.getRatings());
+        productDto.setPrice(product.getPrice());
+        productDto.setNumOfReviews(product.getNumOfReviews());
+
+        List<ProductReviewDto> productReviewDtos = product.getReviews().stream().map( review -> {
+            ProductReviewDto reviewDto = new ProductReviewDto();
+            reviewDto.setProductId(product.getId());
+            reviewDto.setComment(review.getComment());
+            reviewDto.setRating(review.getRating());
+
+            return reviewDto;
+        }
+        ).collect(Collectors.toList());
+        productDto.setReviews(productReviewDtos);
+
+        return productDto;
     }
 
     public Product getProductById(Long id){
