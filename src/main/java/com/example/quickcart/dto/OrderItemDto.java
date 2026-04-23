@@ -1,26 +1,20 @@
-package com.example.quickcart.entity;
+package com.example.quickcart.dto;
 
+import com.example.quickcart.entity.Product;
 import jakarta.persistence.*;
 
-@Entity
-public class OrderItem {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class OrderItemDto {
+
 
     private String name;
     private Integer quantity;
     private String image;
     private Double price;
-
-    @ManyToOne
-    @JoinColumn(name = "order_id")
     private Product product;
 
 
-    public OrderItem(Long id, String name, Integer quantity, String image, Double price, Product product) {
-        this.id = id;
+    public OrderItemDto(String name, Integer quantity, String image, Double price, Product product) {
         this.name = name;
         this.quantity = quantity;
         this.image = image;
@@ -28,15 +22,7 @@ public class OrderItem {
         this.product = product;
     }
 
-    public OrderItem() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public OrderItemDto() {
     }
 
     public String getName() {
@@ -79,3 +65,4 @@ public class OrderItem {
         this.product = product;
     }
 }
+
