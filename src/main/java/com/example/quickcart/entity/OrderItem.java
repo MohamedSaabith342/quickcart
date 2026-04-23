@@ -1,5 +1,6 @@
 package com.example.quickcart.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -16,11 +17,12 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
+    @JsonIgnore
     private Product product;
 
 
-    public OrderItem(Long id, String name, Integer quantity, String image, Double price, Product product) {
-        this.id = id;
+    public OrderItem(String name, Integer quantity, String image, Double price, Product product) {
+        super();
         this.name = name;
         this.quantity = quantity;
         this.image = image;
@@ -29,6 +31,7 @@ public class OrderItem {
     }
 
     public OrderItem() {
+        super();
     }
 
     public Long getId() {

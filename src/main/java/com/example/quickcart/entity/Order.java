@@ -1,7 +1,9 @@
 package com.example.quickcart.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,29 +15,29 @@ public class Order {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "order_id")
-    private List<OrderItem> orderItem;
+
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     private Double totalItemsAmount;
-    private Double textAmount;
+    private Double taxAmount;
     private Double totalAmount;
     private String status;
-    private String orderNo;
+    private String referenceId;
 
 
-    public Order(Long id,
-                 List<OrderItem> orderItem,
-                 Double textAmount,
+    public Order(List<OrderItem> orderItems,
+                 Double taxAmount,
                  Double totalItemsAmount,
                  Double totalAmount,
                  String status,
-                 String orderNo) {
-        this.id = id;
-        this.orderItem = orderItem;
-        this.textAmount = textAmount;
+                 String referenceId) {
+
+        this.orderItems = orderItems;
+        this.taxAmount = taxAmount;
         this.totalItemsAmount = totalItemsAmount;
         this.totalAmount = totalAmount;
         this.status = status;
-        this.orderNo = orderNo;
+        this.referenceId = referenceId;
     }
 
     public Order() {
@@ -49,12 +51,12 @@ public class Order {
         this.id = id;
     }
 
-    public List<OrderItem> getOrderItem() {
-        return orderItem;
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
-    public void setOrderItem(List<OrderItem> orderItem) {
-        this.orderItem = orderItem;
+    public void setOrderItems(List<OrderItem> orderItem) {
+        this.orderItems = orderItem;
     }
 
     public Double getTotalItemsAmount() {
@@ -65,12 +67,12 @@ public class Order {
         this.totalItemsAmount = totalItemsAmount;
     }
 
-    public Double getTextAmount() {
-        return textAmount;
+    public Double getTaxAmount() {
+        return taxAmount;
     }
 
-    public void setTextAmount(Double textAmount) {
-        this.textAmount = textAmount;
+    public void setTaxAmount(Double taxAmount) {
+        this.taxAmount = taxAmount;
     }
 
     public Double getTotalAmount() {
@@ -89,11 +91,11 @@ public class Order {
         this.status = status;
     }
 
-    public String getOrderNo() {
-        return orderNo;
+    public String getReferenceId() {
+        return referenceId;
     }
 
-    public void setOrderNo(String orderNo) {
-        this.orderNo = orderNo;
+    public void setReferenceId(String referenceId) {
+        this.referenceId = referenceId;
     }
 }

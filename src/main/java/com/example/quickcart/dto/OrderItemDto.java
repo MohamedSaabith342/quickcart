@@ -11,15 +11,15 @@ public class OrderItemDto {
     private Integer quantity;
     private String image;
     private Double price;
-    private Product product;
+    private Long productId;
 
 
-    public OrderItemDto(String name, Integer quantity, String image, Double price, Product product) {
+    public OrderItemDto(String name, Integer quantity, String image, Double price, Long productId) {
         this.name = name;
         this.quantity = quantity;
         this.image = image;
         this.price = price;
-        this.product = product;
+        this.productId = productId;
     }
 
     public OrderItemDto() {
@@ -57,12 +57,12 @@ public class OrderItemDto {
         this.price = price;
     }
 
-    public Product getProduct() {
-        return product;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 }
 
