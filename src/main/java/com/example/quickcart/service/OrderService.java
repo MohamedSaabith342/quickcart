@@ -1,6 +1,7 @@
 package com.example.quickcart.service;
 
 import com.example.quickcart.dto.CreateOrderRequest;
+import com.example.quickcart.dto.OrderCreated;
 import com.example.quickcart.dto.OrderItemDto;
 import com.example.quickcart.entity.Order;
 import com.example.quickcart.entity.OrderItem;
@@ -24,7 +25,7 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
-    public Order createOrder(CreateOrderRequest orderRequest) {
+    public OrderCreated createOrder(CreateOrderRequest orderRequest) {
         Order order = new Order();
         order.setStatus("PENDING");
         double totalItemsAmount = 0;
@@ -50,15 +51,11 @@ public class OrderService {
         totalAmount = totalItemsAmount + taxAmount;
         order.setTaxAmount(taxAmount);
         order.setTotalAmount(totalAmount);
-        order.setReferenceId(UUID.randomUUID().toString());
+        String refId = UUID.randomUUID().toString();
+        order.setReferenceId(refId);
 
-
-
-        return orderRepository.save(order);
-
-
-
-
+        orderRepository.save(order);
+        return new OrderCreated(refId);
 
     }
 

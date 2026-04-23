@@ -1,6 +1,7 @@
 package com.example.quickcart.controller;
 
 import com.example.quickcart.dto.CreateOrderRequest;
+import com.example.quickcart.dto.OrderCreated;
 import com.example.quickcart.entity.Order;
 import com.example.quickcart.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,8 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<?> createOrder(@RequestBody CreateOrderRequest orderRequest){
 
-        Order order = orderService.createOrder(orderRequest);
-        return ResponseEntity.ok().body(order);
+        OrderCreated orderCreated = orderService.createOrder(orderRequest);
+        return ResponseEntity.ok().body(orderCreated);
 
 
     }
